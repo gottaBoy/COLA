@@ -5,21 +5,19 @@
 
     <!--
         a dummy aggregation parent pom for development.
-
-        simplify the development process for all cola modules including examples modules, e.g.
+        simplify the development process for all sophon modules including examples modules, e.g.
         - maven test/install
         - import to IDE
     -->
-    <groupId>com.alibaba.cola</groupId>
-    <artifactId>cola-dummy-aggregation-parent</artifactId>
-    <version>dummy-SNAPSHOT</version>
+    <groupId>com.zeron.sophon</groupId>
+    <artifactId>sophon-ddd-parent</artifactId>
+    <version>sophon-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>cola-components</module>
-        <module>cola-archetypes</module>
-
-        <module>cola-samples/craftsman</module>
-        <module>cola-samples/charge</module>
+        <module>sophon-components</module>
+        <module>sophon-archetypes</module>
+<!--        <module>sophon-examples/craftsman</module>-->
+<!--        <module>sophon-examples/charge</module>-->
     </modules>
 </project>

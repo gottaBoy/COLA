@@ -9,7 +9,7 @@ source bash-buddy/lib/common_utils.sh
 # prepare
 ################################################################################
 
-readonly default_build_jdk_version=11
+readonly default_build_jdk_version=17
 # shellcheck disable=SC2034
 readonly PREPARE_JDKS_INSTALL_BY_SDKMAN=(
   8
@@ -47,18 +47,18 @@ extractFirstElementValueFromPom() {
   grep \<"$element"'>.*</'"$element"\> "$pom_file" | awk -F'</?'"$element"\> 'NR==1 {print $2}'
 }
 
-test_cola_archetype() {
+test_sophon_archetype() {
   (
     JVB_MVN_OPTS=("${JVB_DEFAULT_MVN_OPTS[@]}")
-    readonly archetype_name=cola-framework-archetype-service
+    readonly archetype_name=sophon-framework-archetype-service
 
     cu::head_line_echo "test archetype:generate by $archetype_name"
 
     # NOTE: DO NOT declare archetypeVersion var as readonly, its value is supplied by subshell.
-    archetypeVersion=$(extractFirstElementValueFromPom version cola-archetypes/cola-archetype-service/pom.xml)
+    archetypeVersion=$(extractFirstElementValueFromPom version sophon-archetypes/sophon-archetype-service/pom.xml)
 
     # shellcheck disable=SC2030
-    readonly demo_dir="cola-archetypes/target/$archetype_name-demo"
+    readonly demo_dir="sophon-archetypes/target/$archetype_name-demo"
     rm -rf "$demo_dir"
     mkdir -p "$demo_dir"
     cd "$demo_dir"
@@ -67,11 +67,11 @@ test_cola_archetype() {
     readonly artifactId=demo-service
 
     jvb::mvn_cmd archetype:generate \
-      -DgroupId=com.alibaba.cola.demo.archetype-service \
+      -DgroupId=com.zeron.sophon.demo.archetype-service \
       -DartifactId="$artifactId" \
       -Dversion=1.0.0-SNAPSHOT \
-      -Dpackage=com.alibaba.cola.demo.service \
-      -DarchetypeGroupId=com.alibaba.cola \
+      -Dpackage=com.zeron.sophon.demo.service \
+      -DarchetypeGroupId=com.zeron.sophon \
       -DarchetypeArtifactId=$archetype_name \
       -DarchetypeVersion="$archetypeVersion" \
       -DinteractiveMode=false \
@@ -83,15 +83,15 @@ test_cola_archetype() {
 
   (
     JVB_MVN_OPTS=("${JVB_DEFAULT_MVN_OPTS[@]}")
-    readonly archetype_name=cola-framework-archetype-web
+    readonly archetype_name=sophon-framework-archetype-web
 
     cu::head_line_echo "test archetype:generate by $archetype_name"
 
     # NOTE: DO NOT declare archetypeVersion var as readonly, its value is supplied by subshell.
-    archetypeVersion=$(extractFirstElementValueFromPom version cola-archetypes/cola-archetype-web/pom.xml)
+    archetypeVersion=$(extractFirstElementValueFromPom version sophon-archetypes/sophon-archetype-web/pom.xml)
 
     # shellcheck disable=SC2031
-    readonly demo_dir="cola-archetypes/target/$archetype_name-demo"
+    readonly demo_dir="sophon-archetypes/target/$archetype_name-demo"
     rm -rf "$demo_dir"
     mkdir -p "$demo_dir"
     cd "$demo_dir"
@@ -100,11 +100,11 @@ test_cola_archetype() {
     readonly artifactId=demo-web
 
     jvb::mvn_cmd archetype:generate \
-      -DgroupId=com.alibaba.cola.demo.archetype-web \
+      -DgroupId=com.zeron.sophon.demo.archetype-web \
       -DartifactId="$artifactId" \
       -Dversion=1.0.0-SNAPSHOT \
-      -Dpackage=com.alibaba.cola.demo.web \
-      -DarchetypeGroupId=com.alibaba.cola \
+      -Dpackage=com.zeron.sophon.demo.web \
+      -DarchetypeGroupId=com.zeron.sophon \
       -DarchetypeArtifactId=$archetype_name \
       -DarchetypeVersion="$archetypeVersion" \
       -DinteractiveMode=false \
@@ -125,7 +125,7 @@ cu::head_line_echo "build and test with Java: $JAVA_HOME"
 
 jvb::mvn_cmd clean install
 
-test_cola_archetype
+test_sophon_archetype
 
 ########################################
 # test multi-version java
@@ -141,5 +141,5 @@ for jdk in "${PREPARE_JDKS_INSTALL_BY_SDKMAN[@]}"; do
   # just test without build
   jvb::mvn_cmd surefire:test
 
-  test_cola_archetype
+  test_sophon_archetype
 done

@@ -14,8 +14,8 @@ readonly nl=$'\n' # new line
 readonly bump_version="$1"
 
 (
-    cu::head_line_echo "bump cola version of cola-components to $bump_version"
-    cd ../cola-components/
+    cu::head_line_echo "bump sophon version of sophon-components to $bump_version"
+    cd ../sophon-components/
 
     jvb::mvn_cmd \
         org.codehaus.mojo:versions-maven-plugin:2.8.1:set \
@@ -25,8 +25,8 @@ readonly bump_version="$1"
 )
 
 (
-    cu::head_line_echo "bump cola version of cola-archetypes to $bump_version"
-    cd ../cola-archetypes/
+    cu::head_line_echo "bump sophon version of sophon-archetypes to $bump_version"
+    cd ../sophon-archetypes/
 
     jvb::mvn_cmd \
         org.codehaus.mojo:versions-maven-plugin:2.11.0:set \
@@ -34,16 +34,16 @@ readonly bump_version="$1"
         -DnewVersion="$bump_version"
 
     cu::log_then_run -s \
-        sed -ri 's~(<cola.components.version>)(.*)(</cola.components.version>)~\1'"$bump_version"'\3~' \
-        cola-archetype-service/src/main/resources/archetype-resources/pom.xml \
-        cola-archetype-web/src/main/resources/archetype-resources/pom.xml
+        sed -ri 's~(<sophon.components.version>)(.*)(</sophon.components.version>)~\1'"$bump_version"'\3~' \
+        sophon-archetype-service/src/main/resources/archetype-resources/pom.xml \
+        sophon-archetype-web/src/main/resources/archetype-resources/pom.xml
 )
 
 (
-    cu::head_line_echo "bump cola version of samples to $bump_version"
-    cd ../cola-samples/
+    cu::head_line_echo "bump sophon version of samples to $bump_version"
+    cd ../sophon-samples/
 
     cu::log_then_run -s \
-        sed -ri 's~(<cola.components.version>)(.*)(</cola.components.version>)~\1'"$bump_version"'\3~' \
+        sed -ri 's~(<sophon.components.version>)(.*)(</sophon.components.version>)~\1'"$bump_version"'\3~' \
         craftsman/pom.xml
 )
